@@ -1,0 +1,16 @@
+== verifiable producer raw (3 msgs)
+{"timestamp":1792972795188,"name":"startup_complete"}
+{"timestamp":1792972795986,"name":"producer_send_success","key":null,"value":"5.0","partition":0,"topic":"dbg-205946","offset":0}
+{"timestamp":1792972796003,"name":"producer_send_success","key":null,"value":"5.1","partition":0,"topic":"dbg-205946","offset":1}
+{"timestamp":1792972796003,"name":"producer_send_success","key":null,"value":"5.2","partition":0,"topic":"dbg-205946","offset":2}
+{"timestamp":1792972796025,"name":"shutdown_complete"}
+{"timestamp":1792972796035,"name":"tool_data","sent":3,"acked":3,"target_throughput":-1,"avg_throughput":3.5294117647058827}
+== console consumer max-messages 2 (stdout+stderr)
+5.0
+5.1
+Processed a total of 2 messages
+== group describe
+
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+g-dbg-205946    dbg-205946      0          2               3               1               -               -               -
+FIM

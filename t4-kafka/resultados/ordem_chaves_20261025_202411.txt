@@ -1,0 +1,22 @@
+Topico: ordem-chaves-202411   modo: chaves   mensagens: 12
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P0  off=0    chave=cliente1   valor=1
+  P0  off=1    chave=cliente2   valor=2
+  P0  off=2    chave=cliente3   valor=3
+  P0  off=3    chave=cliente1   valor=4
+  P0  off=4    chave=cliente2   valor=5
+  P0  off=5    chave=cliente3   valor=6
+  P0  off=6    chave=cliente1   valor=7
+  P0  off=7    chave=cliente2   valor=8
+  P0  off=8    chave=cliente3   valor=9
+  P0  off=9    chave=cliente1   valor=10
+  P0  off=10   chave=cliente2   valor=11
+  P0  off=11   chave=cliente3   valor=12
+
+Sequencia por particao (ordenada por offset):
+  P0: 1 2 3 4 5 6 7 8 9 10 11 12
+
+Inversoes na ordem global recebida: 0
+Inversoes dentro de cada particao: 0
+Inversoes dentro de cada chave: 0

@@ -1,0 +1,24 @@
+Topico e6-particao-205552 (1 particao, fator 3). Lider antes da particao: kafka3
+antes: 10 de 10 escritas com acks=all
+
+[20:56:04] isolando kafka3 da rede interna
+== Lado minoritario (cliente falando so com kafka3)
+  metadados vistos por kafka3: lider=3 isr=3,1,2
+  escrita acks=1:   10 de 10 confirmadas
+  escrita acks=all: 10 de 10 confirmadas
+
+== Lado majoritario
+  novo lider eleito pela maioria: kafka1 (21991 ms apos o isolamento); 1 isr=1,2
+  escrita acks=all na maioria: 0 de 10 confirmadas
+  metadados vistos por kafka3 agora: lider=3 isr=3,1,2
+
+[20:56:43] reconectando kafka3
+== Depois de reconectar (ISR: 1,2,3, lider: kafka1)
+  mensagens que sobreviveram, por origem:
+    antes da particao (0):       10
+    isolado, acks=1 (1):         0
+    isolado, acks=all (2):       10
+    maioria, acks=all (3):       10
+  log de kafka3 sobre truncamento ao voltar:
+    [2026-10-25 23:56:45,165] INFO [ReplicaFetcher replicaId=3, leaderId=1, fetcherId=0] Truncating partition e6-particao-205552-0 with TruncationState(offset=10, completed=true) due to leader epoch and offset EpochEndOffset
+    [2026-10-25 23:56:45,165] INFO [UnifiedLog partition=e6-particao-205552-0, dir=/tmp/kafka-logs] Truncating to offset 10 (org.apache.kafka.storage.internals.log.UnifiedLog)

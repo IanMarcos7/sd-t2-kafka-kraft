@@ -1,0 +1,21 @@
+Topico: ordem-sem-chave-202421   modo: sem-chave   mensagens: 12
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P2  off=0    chave=-          valor=1
+  P2  off=1    chave=-          valor=2
+  P2  off=2    chave=-          valor=3
+  P2  off=3    chave=-          valor=4
+  P2  off=4    chave=-          valor=5
+  P2  off=5    chave=-          valor=6
+  P2  off=6    chave=-          valor=7
+  P2  off=7    chave=-          valor=8
+  P2  off=8    chave=-          valor=9
+  P2  off=9    chave=-          valor=10
+  P2  off=10   chave=-          valor=11
+  P2  off=11   chave=-          valor=12
+
+Sequencia por particao (ordenada por offset):
+  P2: 1 2 3 4 5 6 7 8 9 10 11 12
+
+Inversoes na ordem global recebida: 0
+Inversoes dentro de cada particao: 0

@@ -1,0 +1,30 @@
+Topico e7-grupo-213212, grupo grupo-e7-213212
+produzidas: 0 mensagens (7.0 a 7.29)
+
+1a leitura do grupo (10 mensagens, depois o consumidor e encerrado):
+  7.0 7.1 7.2 7.3 7.4 7.5 7.6 7.7 7.8 7.9 
+offsets do grupo apos a 1a leitura:
+  
+  GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+  grupo-e7-213212 e7-grupo-213212 0          10              30              20              -               -               -
+
+2a leitura do mesmo grupo (deve continuar do offset 10):
+  7.10 7.11 7.12 7.13 7.14 7.15 7.16 7.17 7.18 7.19 
+  
+  GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+  grupo-e7-213212 e7-grupo-213212 0          20              30              10              -               -               -
+
+== Estado final das replicas do topico pedidos (tamanho por broker, kafka-log-dirs):
+  broker 1  pedidos-2  45164602 bytes
+  broker 1  pedidos-0  48923450 bytes
+  broker 1  pedidos-1  47574144 bytes
+  broker 2  pedidos-2  45164602 bytes
+  broker 2  pedidos-0  48923450 bytes
+  broker 2  pedidos-1  47574144 bytes
+  broker 3  pedidos-2  45164602 bytes
+  broker 3  pedidos-0  48923450 bytes
+  broker 3  pedidos-1  47574144 bytes
+== Fim do log por particao (kafka-get-offsets):
+  pedidos:0:233011
+  pedidos:1:226602
+  pedidos:2:215139

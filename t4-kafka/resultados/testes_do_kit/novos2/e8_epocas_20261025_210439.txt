@@ -1,0 +1,17 @@
+Quorum KRaft antes: LeaderId=2, epoca=24
+Lider de pedidos/0 antes: kafka2. Historico de epocas (leader-epoch-checkpoint):
+  kafka1: [epoca 12 desde offset 0] 
+  kafka2: [epoca 12 desde offset 0] [epoca 18 desde offset 41733] 
+  kafka3: [epoca 12 desde offset 0] 
+[21:04:56] parando kafka2
+
+Novo lider de pedidos/0: kafka1. Uma escrita para registrar a nova epoca: 5 de 5
+  kafka1: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] 
+  kafka2: 
+  kafka3: [epoca 12 desde offset 0] 
+
+Depois que kafka2 voltou (ele adota a epoca nova ao seguir o lider):
+  kafka1: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] 
+  kafka2: [epoca 12 desde offset 0] 
+  kafka3: [epoca 12 desde offset 0] 
+Quorum KRaft depois: LeaderId=3, epoca=25

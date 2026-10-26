@@ -1,0 +1,383 @@
+
+################ Reconexao do kafka3 (21:47:42)
+===== Conteineres
+NAME      STATUS
+cliente   Up 2 hours
+kafka1    Up 6 minutes
+kafka2    Up 6 minutes
+kafka3    Up 6 minutes
+kcat      Up About an hour
+
+===== Quorum KRaft (kafka-metadata-quorum describe --status)
+ClusterId:              MkU3OEVBNTcwNTJENDM2Qk
+LeaderId:               1
+LeaderEpoch:            88
+HighWatermark:          20026
+MaxFollowerLag:         0
+MaxFollowerLagTimeMs:   0
+CurrentVoters:          [{"id": 1, "endpoints": ["CONTROLLER://172.30.0.41:9093"]}, {"id": 2, "endpoints": ["CONTROLLER://172.30.0.42:9093"]}, {"id": 3, "endpoints": ["CONTROLLER://172.30.0.43:9093"]}]
+CurrentObservers:       []
+
+===== Topicos (kafka-topics --describe)
+Topic: pedidos	TopicId: BLsMrSpcTfea32EAGEAVsg	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=2
+	Topic: pedidos	Partition: 0	Leader: 1	Replicas: 1,2,3	Isr: 2,1,3	Elr: 	LastKnownElr: 
+	Topic: pedidos	Partition: 1	Leader: 2	Replicas: 2,3,1	Isr: 2,1,3	Elr: 	LastKnownElr: 
+	Topic: pedidos	Partition: 2	Leader: 3	Replicas: 3,1,2	Isr: 2,1,3	Elr: 	LastKnownElr: 
+[21:47:54] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/status_20261025_214744.txt
+
+################ E8 eleicao do controlador (21:47:54)
+[21:47:59] rep 1/5: controlador ativo = kafka1 (epoca 88); derrubando
+1,1,88,3,90,7827,14327
+[21:48:28] rep 2/5: controlador ativo = kafka3 (epoca 90); derrubando
+2,3,90,2,91,4096,14303
+[21:48:54] rep 3/5: controlador ativo = kafka2 (epoca 91); derrubando
+3,2,91,1,93,6163,25131
+[21:49:32] rep 4/5: controlador ativo = kafka1 (epoca 93); derrubando
+4,1,93,2,94,3201,14328
+[21:49:58] rep 5/5: controlador ativo = kafka2 (epoca 94); derrubando
+5,2,94,1,95,2739,15795
+
+tempo de eleicao (ms): n=5  media=4805.20  desvio=2140.12
+[21:50:22] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/eleicao_controlador_20261025_214754.csv
+
+################ E8 epocas (21:50:22)
+Quorum KRaft antes: LeaderId=1, epoca=95
+Lider de pedidos/0 antes: kafka1. Historico de epocas (leader-epoch-checkpoint):
+  kafka1: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 38 desde offset 251680] 
+  kafka2: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] 
+  kafka3: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] 
+[21:50:33] parando kafka1
+
+Novo lider de pedidos/0: kafka2. Uma escrita para registrar a nova epoca: 5 de 5
+  kafka1: 
+  kafka2: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+  kafka3: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] 
+
+Depois que kafka1 voltou. Obs.: os seguidores atualizam a epoca em memoria e gravam este
+arquivo de forma preguicosa; a fonte de verdade e o checkpoint do lider:
+  kafka1: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+  kafka2: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+  kafka3: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+Quorum KRaft depois: LeaderId=2, epoca=97
+[21:51:15] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e8_epocas_20261025_215022.txt
+
+################ E9 retries, rodada 1/5 (21:51:15)
+[21:51:19] perfil sem-idemp-5: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+[21:51:19] produzindo 1..100000 (chave fixa) em e9-sem-idemp-5-215115; lider da particao = kafka3
+[21:51:25] falha (matar) em kafka3 com offset 36905 apos 5980 ms
+[21:51:37] producao terminou; novo lider: kafka1
+[21:51:37] restaurando kafka3
+[21:51:41] consumindo e conferindo
+perfil=sem-idemp-5
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka3 (offset 36905)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=146
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=18
+[21:51:42] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-5_20261025_215141.txt
+[21:51:46] perfil sem-idemp-1: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+[21:51:46] produzindo 1..100000 (chave fixa) em e9-sem-idemp-1-215142; lider da particao = kafka1
+[21:51:54] falha (matar) em kafka1 com offset 68953 apos 8111 ms
+[21:52:21] producao terminou; novo lider: kafka2
+[21:52:21] restaurando kafka1
+[21:52:24] consumindo e conferindo
+perfil=sem-idemp-1
+config: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+falha=matar no lider kafka1 (offset 68953)
+enviadas=100000  recebidas=100146
+fora de ordem (valores novos apos um maior)=0
+duplicatas=146
+perdidas=0
+linhas de erro no produtor=2
+[21:52:25] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-1_20261025_215224.txt
+[21:52:29] perfil idemp-5: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+[21:52:29] produzindo 1..100000 (chave fixa) em e9-idemp-5-215225; lider da particao = kafka1
+[21:52:35] falha (matar) em kafka1 com offset 52828 apos 5652 ms
+[21:53:01] producao terminou; novo lider: kafka2
+[21:53:01] restaurando kafka1
+[21:53:05] consumindo e conferindo
+perfil=idemp-5
+config: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 52828)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10
+[21:53:06] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_idemp-5_20261025_215305.txt
+[21:53:10] perfil sem-retries: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+[21:53:10] produzindo 1..100000 (chave fixa) em e9-sem-retries-215306; lider da particao = kafka3
+[21:53:17] falha (matar) em kafka3 com offset 49826 apos 6600 ms
+[21:53:49] producao terminou; novo lider: kafka1
+[21:53:49] restaurando kafka3
+[21:53:52] consumindo e conferindo
+perfil=sem-retries
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+falha=matar no lider kafka3 (offset 49826)
+enviadas=100000  recebidas=99270
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=730
+linhas de erro no produtor=1465
+[21:53:53] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-retries_20261025_215352.txt
+
+################ E9 retries, rodada 2/5 (21:53:53)
+[21:53:58] perfil sem-idemp-5: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+[21:53:58] produzindo 1..100000 (chave fixa) em e9-sem-idemp-5-215354; lider da particao = kafka1
+[21:54:04] falha (matar) em kafka1 com offset 51071 apos 5950 ms
+[21:54:17] producao terminou; novo lider: kafka2
+[21:54:18] restaurando kafka1
+[21:54:20] consumindo e conferindo
+perfil=sem-idemp-5
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 51071)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=584
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10
+[21:54:22] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-5_20261025_215420.txt
+[21:54:25] perfil sem-idemp-1: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+[21:54:25] produzindo 1..100000 (chave fixa) em e9-sem-idemp-1-215422; lider da particao = kafka3
+[21:54:32] falha (matar) em kafka3 com offset 53048 apos 6143 ms
+[21:54:54] producao terminou; novo lider: kafka1
+[21:54:54] restaurando kafka3
+[21:54:57] consumindo e conferindo
+perfil=sem-idemp-1
+config: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+falha=matar no lider kafka3 (offset 53048)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=2
+[21:54:58] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-1_20261025_215457.txt
+[21:55:03] perfil idemp-5: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+[21:55:03] produzindo 1..100000 (chave fixa) em e9-idemp-5-215458; lider da particao = kafka1
+[21:55:08] falha (matar) em kafka1 com offset 35375 apos 5562 ms
+[21:55:35] producao terminou; novo lider: kafka2
+[21:55:35] restaurando kafka1
+[21:55:39] consumindo e conferindo
+perfil=idemp-5
+config: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 35375)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10
+[21:55:40] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_idemp-5_20261025_215539.txt
+[21:55:44] perfil sem-retries: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+[21:55:44] produzindo 1..100000 (chave fixa) em e9-sem-retries-215540; lider da particao = kafka2
+[21:55:50] falha (matar) em kafka2 com offset 57720 apos 6023 ms
+[21:56:49] producao terminou; novo lider: kafka3
+[21:56:49] restaurando kafka2
+[21:56:54] consumindo e conferindo
+perfil=sem-retries
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+falha=matar no lider kafka2 (offset 57720)
+enviadas=100000  recebidas=99416
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=584
+linhas de erro no produtor=1465
+[21:56:55] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-retries_20261025_215654.txt
+
+################ E9 retries, rodada 3/5 (21:56:55)
+[21:56:59] perfil sem-idemp-5: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+[21:56:59] produzindo 1..100000 (chave fixa) em e9-sem-idemp-5-215656; lider da particao = kafka3
+[21:57:05] falha (matar) em kafka3 com offset 34638 apos 5443 ms
+[21:57:28] producao terminou; novo lider: kafka1
+[21:57:28] restaurando kafka3
+[21:57:31] consumindo e conferindo
+perfil=sem-idemp-5
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka3 (offset 34638)
+enviadas=100000  recebidas=100146
+fora de ordem (valores novos apos um maior)=438
+duplicatas=146
+perdidas=0
+linhas de erro no produtor=10
+[21:57:32] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-5_20261025_215731.txt
+[21:57:36] perfil sem-idemp-1: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+[21:57:36] produzindo 1..100000 (chave fixa) em e9-sem-idemp-1-215732; lider da particao = kafka3
+[21:57:41] falha (matar) em kafka3 com offset 35929 apos 5254 ms
+[21:58:05] producao terminou; novo lider: kafka1
+[21:58:05] restaurando kafka3
+[21:58:09] consumindo e conferindo
+perfil=sem-idemp-1
+config: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+falha=matar no lider kafka3 (offset 35929)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=2
+[21:58:10] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-1_20261025_215809.txt
+[21:58:14] perfil idemp-5: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+[21:58:14] produzindo 1..100000 (chave fixa) em e9-idemp-5-215810; lider da particao = kafka1
+[21:58:20] falha (matar) em kafka1 com offset 46764 apos 6171 ms
+[21:58:47] producao terminou; novo lider: kafka2
+[21:58:47] restaurando kafka1
+[21:58:51] consumindo e conferindo
+perfil=idemp-5
+config: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 46764)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10
+[21:58:52] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_idemp-5_20261025_215851.txt
+[21:58:56] perfil sem-retries: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+[21:58:56] produzindo 1..100000 (chave fixa) em e9-sem-retries-215852; lider da particao = kafka1
+[21:59:02] falha (matar) em kafka1 com offset 52521 apos 5529 ms
+[21:59:15] producao terminou; novo lider: kafka2
+[21:59:15] restaurando kafka1
+[21:59:19] consumindo e conferindo
+perfil=sem-retries
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+falha=matar no lider kafka1 (offset 52521)
+enviadas=100000  recebidas=99416
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=584
+linhas de erro no produtor=1465
+[21:59:21] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-retries_20261025_215919.txt
+
+################ E9 retries, rodada 4/5 (21:59:21)
+[21:59:25] perfil sem-idemp-5: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+[21:59:25] produzindo 1..100000 (chave fixa) em e9-sem-idemp-5-215921; lider da particao = kafka1
+[21:59:30] falha (matar) em kafka1 com offset 51856 apos 5591 ms
+[21:59:42] producao terminou; novo lider: kafka2
+[21:59:42] restaurando kafka1
+[21:59:45] consumindo e conferindo
+perfil=sem-idemp-5
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 51856)
+enviadas=100000  recebidas=100146
+fora de ordem (valores novos apos um maior)=438
+duplicatas=146
+perdidas=0
+linhas de erro no produtor=10
+[21:59:46] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-5_20261025_215945.txt
+[21:59:50] perfil sem-idemp-1: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+[21:59:50] produzindo 1..100000 (chave fixa) em e9-sem-idemp-1-215946; lider da particao = kafka1
+[21:59:57] falha (matar) em kafka1 com offset 64599 apos 6344 ms
+[22:00:20] producao terminou; novo lider: kafka2
+[22:00:20] restaurando kafka1
+[22:00:24] consumindo e conferindo
+perfil=sem-idemp-1
+config: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+falha=matar no lider kafka1 (offset 64599)
+enviadas=100000  recebidas=100146
+fora de ordem (valores novos apos um maior)=0
+duplicatas=146
+perdidas=0
+linhas de erro no produtor=2
+[22:00:26] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-1_20261025_220024.txt
+[22:00:30] perfil idemp-5: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+[22:00:30] produzindo 1..100000 (chave fixa) em e9-idemp-5-220026; lider da particao = kafka1
+[22:00:35] falha (matar) em kafka1 com offset 46300 apos 5304 ms
+[22:00:55] producao terminou; novo lider: kafka2
+[22:00:55] restaurando kafka1
+[22:00:58] consumindo e conferindo
+perfil=idemp-5
+config: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 46300)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10
+[22:00:59] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_idemp-5_20261025_220058.txt
+[22:01:03] perfil sem-retries: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+[22:01:03] produzindo 1..100000 (chave fixa) em e9-sem-retries-220059; lider da particao = kafka1
+[22:01:09] falha (matar) em kafka1 com offset 47995 apos 5593 ms
+[22:01:56] producao terminou; novo lider: kafka2
+[22:01:56] restaurando kafka1
+[22:02:00] consumindo e conferindo
+perfil=sem-retries
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+falha=matar no lider kafka1 (offset 47995)
+enviadas=100000  recebidas=99270
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=730
+linhas de erro no produtor=1465
+[22:02:01] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-retries_20261025_220200.txt
+
+################ E9 retries, rodada 5/5 (22:02:01)
+[22:02:06] perfil sem-idemp-5: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+[22:02:06] produzindo 1..100000 (chave fixa) em e9-sem-idemp-5-220202; lider da particao = kafka1
+[22:02:12] falha (matar) em kafka1 com offset 38156 apos 5759 ms
+[22:02:23] producao terminou; novo lider: kafka2
+[22:02:23] restaurando kafka1
+[22:02:27] consumindo e conferindo
+perfil=sem-idemp-5
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 38156)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=584
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10
+[22:02:29] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-5_20261025_220227.txt
+[22:02:33] perfil sem-idemp-1: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+[22:02:33] produzindo 1..100000 (chave fixa) em e9-sem-idemp-1-220229; lider da particao = kafka3
+[22:02:39] falha (matar) em kafka3 com offset 33564 apos 6254 ms
+[22:02:59] producao terminou; novo lider: kafka1
+[22:02:59] restaurando kafka3
+[22:03:03] consumindo e conferindo
+perfil=sem-idemp-1
+config: enable.idempotence=false max.in.flight.requests.per.connection=1 retries=2147483647
+falha=matar no lider kafka3 (offset 33564)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=2
+[22:03:05] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-idemp-1_20261025_220304.txt
+[22:03:09] perfil idemp-5: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+[22:03:09] produzindo 1..100000 (chave fixa) em e9-idemp-5-220305; lider da particao = kafka3
+[22:03:15] falha (matar) em kafka3 com offset 72904 apos 6165 ms
+[22:03:38] producao terminou; novo lider: kafka1
+[22:03:38] restaurando kafka3
+[22:03:41] consumindo e conferindo
+perfil=idemp-5
+config: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka3 (offset 72904)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10
+[22:03:42] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_idemp-5_20261025_220341.txt
+[22:03:46] perfil sem-retries: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+[22:03:46] produzindo 1..100000 (chave fixa) em e9-sem-retries-220342; lider da particao = kafka3
+[22:03:52] falha (matar) em kafka3 com offset 50930 apos 5640 ms
+[22:04:03] producao terminou; novo lider: kafka1
+[22:04:03] restaurando kafka3
+[22:04:07] consumindo e conferindo
+perfil=sem-retries
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+falha=matar no lider kafka3 (offset 50930)
+enviadas=100000  recebidas=99416
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=584
+linhas de erro no produtor=1465
+[22:04:08] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_retries_sem-retries_20261025_220407.txt
+
+################ E9 vazao 1/3/6 particoes (22:04:08)
+[22:04:12] 1 particao(oes), repeticao 1/5
+1,1,12016.3,2.29,1536.23,2754.00
+[22:04:18] 1 particao(oes), repeticao 2/5
+1,2,3054.9,0.58,3160.26,15405.00
+[22:04:37] 1 particao(oes), repeticao 3/5
+1,3,419.0,0.08,68080.40,117997.00
+[22:06:39] 1 particao(oes), repeticao 4/5
+1,4,419.3,0.08,67397.30,118421.00
+[22:08:41] 1 particao(oes), repeticao 5/5

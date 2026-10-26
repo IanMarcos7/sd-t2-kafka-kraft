@@ -1,0 +1,8 @@
+perfil=idemp-5
+config: enable.idempotence=true max.in.flight.requests.per.connection=5 retries=2147483647
+falha=matar no lider kafka1 (offset 35375)
+enviadas=100000  recebidas=100000
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=0
+linhas de erro no produtor=10

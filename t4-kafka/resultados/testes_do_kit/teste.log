@@ -1,0 +1,23 @@
+### medir_produtor.sh 1 1
+[20:37:52] repeticao 1/1 (acks=1)
+1,1,pedidos,50000,200,20508.6,3.91,563.69,876.00,860
+
+acks=1  vazao (msgs/s):   n=1  media=20508.60  desvio=0.00
+acks=1  latencia media (ms): n=1  media=563.69  desvio=0.00
+[20:37:59] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/produtor_acks-1_pedidos_20261025_203748.csv
+### medir_produtor.sh all 1
+[20:38:03] repeticao 1/1 (acks=all)
+1,all,pedidos,50000,200,16772.9,3.20,949.03,1612.00,1607
+
+acks=all  vazao (msgs/s):   n=1  media=16772.90  desvio=0.00
+acks=all  latencia media (ms): n=1  media=949.03  desvio=0.00
+[20:38:10] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/produtor_acks-all_pedidos_20261025_203759.csv
+### medir_recuperacao.sh kafka3 1
+[20:38:15] rep 1/1: isolando kafka3 da rede interna
+[20:38:26]   kafka3 saiu do ISR apos 9832 ms (ISR agora: 1,2); produzindo 20000 mensagens
+[20:39:01]   reconectando kafka3
+1,kafka3,pedidos,0,"1,2",9832,20000,2975
+
+tempo para voltar ao ISR (ms): n=1  media=2975.00  desvio=0.00
+[20:39:04] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/recuperacao_kafka3_20261025_203810.csv
+FIM

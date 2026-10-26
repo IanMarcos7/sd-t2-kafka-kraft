@@ -1,0 +1,18 @@
+Quorum KRaft antes: LeaderId=1, epoca=95
+Lider de pedidos/0 antes: kafka1. Historico de epocas (leader-epoch-checkpoint):
+  kafka1: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 38 desde offset 251680] 
+  kafka2: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] 
+  kafka3: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] 
+[21:50:33] parando kafka1
+
+Novo lider de pedidos/0: kafka2. Uma escrita para registrar a nova epoca: 5 de 5
+  kafka1: 
+  kafka2: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+  kafka3: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] 
+
+Depois que kafka1 voltou. Obs.: os seguidores atualizam a epoca em memoria e gravam este
+arquivo de forma preguicosa; a fonte de verdade e o checkpoint do lider:
+  kafka1: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+  kafka2: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+  kafka3: [epoca 12 desde offset 0] [epoca 19 desde offset 41733] [epoca 24 desde offset 210601] [epoca 25 desde offset 224431] [epoca 33 desde offset 233011] [epoca 39 desde offset 251680] 
+Quorum KRaft depois: LeaderId=2, epoca=97

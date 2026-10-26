@@ -1,0 +1,14 @@
+== 3 nos ativos
+3,3,"3,1,2",10,10,20,ok,LeaderId=1 epoca=19
+[20:52:37] parando kafka1
+== 2 nos ativos (kafka1 parado)
+2,3,"3,2",9,10,39,ok,LeaderId=2 epoca=20
+[20:53:37] parando kafka2
+== 1 no ativo (so kafka3)
+1,3,"3",0,9,39,falhou,sem_resposta
+[20:55:37] religando os dois nos
+== depois de religar: mensagens na particao (ate o HW), por estado de origem
+  escritas com 3 no(s) ativo(s): acks=all -> 10 lidas; acks=1 -> 10 lidas
+  escritas com 2 no(s) ativo(s): acks=all -> 9 lidas; acks=1 -> 10 lidas
+  escritas com 1 no(s) ativo(s): acks=all -> 0 lidas; acks=1 -> 9 lidas
+  total na particao: 48

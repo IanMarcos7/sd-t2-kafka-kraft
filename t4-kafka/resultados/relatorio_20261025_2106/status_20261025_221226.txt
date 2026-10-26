@@ -1,0 +1,23 @@
+===== Conteineres
+NAME      STATUS
+cliente   Up 2 hours
+kafka1    Up 21 seconds
+kafka2    Up 21 seconds
+kafka3    Up 21 seconds
+kcat      Up 2 hours
+
+===== Quorum KRaft (kafka-metadata-quorum describe --status)
+ClusterId:              MkU3OEVBNTcwNTJENDM2Qk
+LeaderId:               3
+LeaderEpoch:            103
+HighWatermark:          29503
+MaxFollowerLag:         0
+MaxFollowerLagTimeMs:   364
+CurrentVoters:          [{"id": 1, "endpoints": ["CONTROLLER://172.30.0.41:9093"]}, {"id": 2, "endpoints": ["CONTROLLER://172.30.0.42:9093"]}, {"id": 3, "endpoints": ["CONTROLLER://172.30.0.43:9093"]}]
+CurrentObservers:       []
+
+===== Topicos (kafka-topics --describe)
+Topic: pedidos	TopicId: BLsMrSpcTfea32EAGEAVsg	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=2
+	Topic: pedidos	Partition: 0	Leader: 3	Replicas: 1,2,3	Isr: 3,2,1	Elr: 	LastKnownElr: 
+	Topic: pedidos	Partition: 1	Leader: 3	Replicas: 2,3,1	Isr: 3,2,1	Elr: 	LastKnownElr: 
+	Topic: pedidos	Partition: 2	Leader: 3	Replicas: 3,1,2	Isr: 3,2,1	Elr: 	LastKnownElr: 

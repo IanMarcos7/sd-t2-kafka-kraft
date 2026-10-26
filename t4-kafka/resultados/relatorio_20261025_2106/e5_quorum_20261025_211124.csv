@@ -1,0 +1,4 @@
+nos_ativos,lider,isr,escrita_acks_all_ok_de_10,escrita_acks_1_ok_de_10,lidas_ate_hw,metadados_criar_topico,controlador
+3,2,"2,3,1",10,10,20,ok,LeaderId=2 epoca=26
+2,2,"2,3",10,10,40,ok,LeaderId=2 epoca=31
+1,2,"2",0,10,40,falhou,sem_resposta

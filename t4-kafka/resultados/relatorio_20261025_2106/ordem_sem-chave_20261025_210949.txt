@@ -1,0 +1,39 @@
+Topico: ordem-sem-chave-210949   modo: sem-chave   mensagens: 30
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P0  off=0    chave=-          valor=1
+  P0  off=1    chave=-          valor=2
+  P0  off=2    chave=-          valor=3
+  P0  off=3    chave=-          valor=4
+  P0  off=4    chave=-          valor=5
+  P0  off=5    chave=-          valor=6
+  P0  off=6    chave=-          valor=7
+  P0  off=7    chave=-          valor=8
+  P0  off=8    chave=-          valor=9
+  P0  off=9    chave=-          valor=10
+  P0  off=10   chave=-          valor=11
+  P0  off=11   chave=-          valor=12
+  P0  off=12   chave=-          valor=13
+  P0  off=13   chave=-          valor=14
+  P0  off=14   chave=-          valor=15
+  P0  off=15   chave=-          valor=16
+  P0  off=16   chave=-          valor=17
+  P0  off=17   chave=-          valor=18
+  P0  off=18   chave=-          valor=19
+  P0  off=19   chave=-          valor=20
+  P0  off=20   chave=-          valor=21
+  P0  off=21   chave=-          valor=22
+  P0  off=22   chave=-          valor=23
+  P0  off=23   chave=-          valor=24
+  P0  off=24   chave=-          valor=25
+  P0  off=25   chave=-          valor=26
+  P0  off=26   chave=-          valor=27
+  P0  off=27   chave=-          valor=28
+  P0  off=28   chave=-          valor=29
+  P0  off=29   chave=-          valor=30
+
+Sequencia por particao (ordenada por offset):
+  P0: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+
+Inversoes na ordem global recebida: 0
+Inversoes dentro de cada particao: 0

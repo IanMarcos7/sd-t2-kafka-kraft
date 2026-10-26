@@ -1,0 +1,40 @@
+Topico: ordem-mesma-chave-211006   modo: mesma-chave   mensagens: 30
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P0  off=0    chave=cliente1   valor=1
+  P0  off=1    chave=cliente1   valor=2
+  P0  off=2    chave=cliente1   valor=3
+  P0  off=3    chave=cliente1   valor=4
+  P0  off=4    chave=cliente1   valor=5
+  P0  off=5    chave=cliente1   valor=6
+  P0  off=6    chave=cliente1   valor=7
+  P0  off=7    chave=cliente1   valor=8
+  P0  off=8    chave=cliente1   valor=9
+  P0  off=9    chave=cliente1   valor=10
+  P0  off=10   chave=cliente1   valor=11
+  P0  off=11   chave=cliente1   valor=12
+  P0  off=12   chave=cliente1   valor=13
+  P0  off=13   chave=cliente1   valor=14
+  P0  off=14   chave=cliente1   valor=15
+  P0  off=15   chave=cliente1   valor=16
+  P0  off=16   chave=cliente1   valor=17
+  P0  off=17   chave=cliente1   valor=18
+  P0  off=18   chave=cliente1   valor=19
+  P0  off=19   chave=cliente1   valor=20
+  P0  off=20   chave=cliente1   valor=21
+  P0  off=21   chave=cliente1   valor=22
+  P0  off=22   chave=cliente1   valor=23
+  P0  off=23   chave=cliente1   valor=24
+  P0  off=24   chave=cliente1   valor=25
+  P0  off=25   chave=cliente1   valor=26
+  P0  off=26   chave=cliente1   valor=27
+  P0  off=27   chave=cliente1   valor=28
+  P0  off=28   chave=cliente1   valor=29
+  P0  off=29   chave=cliente1   valor=30
+
+Sequencia por particao (ordenada por offset):
+  P0: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+
+Inversoes na ordem global recebida: 0
+Inversoes dentro de cada particao: 0
+Inversoes dentro de cada chave: 0

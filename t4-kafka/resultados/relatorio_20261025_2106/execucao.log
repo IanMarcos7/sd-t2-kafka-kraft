@@ -1,0 +1,408 @@
+
+################ Ambiente (21:06:46)
+MINGW64_NT-10.0-26200 enzocasa 3.6.10-5a1665c8.x86_64 2026-09-28 10:40 UTC x86_64 Msys
+Docker 29.9.2
+Docker Compose version v5.6.1
+kcat  564KiB / 64MiB  0.00%
+kafka2  230MiB / 320MiB  2.86%
+kafka1  240.4MiB / 320MiB  6.21%
+cliente  1.477MiB / 512MiB  0.00%
+kafka3  277.6MiB / 320MiB  5.25%
+
+################ E1 subida e topologia (21:06:51)
+===== Conteineres
+NAME      STATUS
+cliente   Up About an hour
+kafka1    Up 8 minutes
+kafka2    Up About a minute
+kafka3    Up 30 minutes
+kcat      Up 44 minutes
+
+===== Quorum KRaft (kafka-metadata-quorum describe --status)
+ClusterId:              MkU3OEVBNTcwNTJENDM2Qk
+LeaderId:               3
+LeaderEpoch:            25
+HighWatermark:          11279
+MaxFollowerLag:         0
+MaxFollowerLagTimeMs:   371
+CurrentVoters:          [{"id": 1, "endpoints": ["CONTROLLER://172.30.0.41:9093"]}, {"id": 2, "endpoints": ["CONTROLLER://172.30.0.42:9093"]}, {"id": 3, "endpoints": ["CONTROLLER://172.30.0.43:9093"]}]
+CurrentObservers:       []
+
+===== Topicos (kafka-topics --describe)
+Topic: pedidos	TopicId: BLsMrSpcTfea32EAGEAVsg	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=2
+	Topic: pedidos	Partition: 0	Leader: 1	Replicas: 1,2,3	Isr: 3,1,2	Elr: 	LastKnownElr: 
+	Topic: pedidos	Partition: 1	Leader: 3	Replicas: 2,3,1	Isr: 3,1,2	Elr: 	LastKnownElr: 
+	Topic: pedidos	Partition: 2	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+[21:06:58] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/status_20261025_210651.txt
+
+################ E2 caminho: chave -> particao (21:06:58)
+[21:07:01] produzindo 1..30 no topico ordem-chaves-210658 (modo chaves)
+[21:07:04] consumindo desde o inicio
+Topico: ordem-chaves-210658   modo: chaves   mensagens: 30
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P1  off=0    chave=cliente4   valor=2
+  P1  off=1    chave=cliente4   valor=5
+  P1  off=2    chave=cliente4   valor=8
+  P1  off=3    chave=cliente4   valor=11
+  P1  off=4    chave=cliente4   valor=14
+  P1  off=5    chave=cliente4   valor=17
+  P1  off=6    chave=cliente4   valor=20
+  P1  off=7    chave=cliente4   valor=23
+  P1  off=8    chave=cliente4   valor=26
+  P1  off=9    chave=cliente4   valor=29
+  P2  off=0    chave=cliente10  valor=3
+  P2  off=1    chave=cliente10  valor=6
+  P2  off=2    chave=cliente10  valor=9
+  P2  off=3    chave=cliente10  valor=12
+  P2  off=4    chave=cliente10  valor=15
+  P2  off=5    chave=cliente10  valor=18
+  P2  off=6    chave=cliente10  valor=21
+  P2  off=7    chave=cliente10  valor=24
+  P2  off=8    chave=cliente10  valor=27
+  P2  off=9    chave=cliente10  valor=30
+  P0  off=0    chave=cliente1   valor=1
+  P0  off=1    chave=cliente1   valor=4
+  P0  off=2    chave=cliente1   valor=7
+  P0  off=3    chave=cliente1   valor=10
+  P0  off=4    chave=cliente1   valor=13
+  P0  off=5    chave=cliente1   valor=16
+  P0  off=6    chave=cliente1   valor=19
+  P0  off=7    chave=cliente1   valor=22
+  P0  off=8    chave=cliente1   valor=25
+  P0  off=9    chave=cliente1   valor=28
+
+Sequencia por particao (ordenada por offset):
+  P0: 1 4 7 10 13 16 19 22 25 28
+  P1: 2 5 8 11 14 17 20 23 26 29
+  P2: 3 6 9 12 15 18 21 24 27 30
+
+Inversoes na ordem global recebida: 2
+Inversoes dentro de cada particao: 0
+Inversoes dentro de cada chave: 0
+[21:07:05] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/ordem_chaves_20261025_210658.txt
+
+################ E3 replicacao (21:07:05)
+== Diretorios da particao pedidos-* em cada no (docker exec kafkaN ls /tmp/kafka-logs)
+  kafka1: pedidos-0 pedidos-1 pedidos-2 
+  kafka2: pedidos-0 pedidos-1 pedidos-2 
+  kafka3: pedidos-0 pedidos-1 pedidos-2 
+== Tamanho de cada replica (kafka-log-dirs)
+  broker 1  pedidos-2  7887401 bytes
+  broker 1  pedidos-0  8762243 bytes
+  broker 1  pedidos-1  8546813 bytes
+  broker 2  pedidos-2  7887401 bytes
+  broker 2  pedidos-0  8762243 bytes
+  broker 2  pedidos-1  8546813 bytes
+  broker 3  pedidos-2  7887401 bytes
+  broker 3  pedidos-0  8762243 bytes
+  broker 3  pedidos-1  8546813 bytes
+
+== Latencia ponta a ponta (kafka-e2e-latency, 1000 mensagens de 200 bytes por rodada)
+  acks=1 rep 1: media,p99 (ms) = 6.6836,26
+  acks=1 rep 2: media,p99 (ms) = 6.2438,25
+  acks=1 rep 3: media,p99 (ms) = 6.3535,27
+  acks=1 rep 4: media,p99 (ms) = 6.3982,24
+  acks=1 rep 5: media,p99 (ms) = 6.3577,34
+  acks=all rep 1: media,p99 (ms) = 5.9765,19
+  acks=all rep 2: media,p99 (ms) = 5.6833,18
+  acks=all rep 3: media,p99 (ms) = 5.8116,15
+  acks=all rep 4: media,p99 (ms) = 6.2285,25
+  acks=all rep 5: media,p99 (ms) = 5.867,21
+  acks=1 media: n=5  media=6.41  desvio=0.16
+  acks=all media: n=5  media=5.91  desvio=0.21
+[21:08:53] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e3_replicacao_20261025_210705.txt e /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e3_replicacao_20261025_210705.csv
+
+################ E3 produtor acks=1 (21:08:53)
+[21:08:56] repeticao 1/5 (acks=1)
+1,1,pedidos,50000,200,26910.7,5.13,478.86,904.00,897
+[21:09:01] repeticao 2/5 (acks=1)
+2,1,pedidos,50000,200,29815.1,5.69,393.81,701.00,694
+[21:09:05] repeticao 3/5 (acks=1)
+3,1,pedidos,50000,200,29958.1,5.71,402.01,615.00,608
+[21:09:10] repeticao 4/5 (acks=1)
+4,1,pedidos,50000,200,24521.8,4.68,503.54,914.00,907
+[21:09:14] repeticao 5/5 (acks=1)
+5,1,pedidos,50000,200,27173.9,5.18,421.16,774.00,761
+
+acks=1  vazao (msgs/s):   n=5  media=27675.92  desvio=2267.74
+acks=1  latencia media (ms): n=5  media=439.88  desvio=48.68
+[21:09:19] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/produtor_acks-1_pedidos_20261025_210854.csv
+
+################ E3 produtor acks=all (21:09:19)
+[21:09:23] repeticao 1/5 (acks=all)
+1,all,pedidos,50000,200,22768.7,4.34,654.10,966.00,950
+[21:09:27] repeticao 2/5 (acks=all)
+2,all,pedidos,50000,200,22614.2,4.31,721.57,1228.00,1215
+[21:09:32] repeticao 3/5 (acks=all)
+3,all,pedidos,50000,200,18860.8,3.60,979.82,1755.00,1746
+[21:09:37] repeticao 4/5 (acks=all)
+4,all,pedidos,50000,200,19387.4,3.70,861.43,1503.00,1493
+[21:09:42] repeticao 5/5 (acks=all)
+5,all,pedidos,50000,200,14467.6,2.76,1837.13,2482.00,2473
+
+acks=all  vazao (msgs/s):   n=5  media=19619.74  desvio=3393.27
+acks=all  latencia media (ms): n=5  media=1010.81  desvio=478.80
+[21:09:49] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/produtor_acks-all_pedidos_20261025_210919.csv
+
+################ E4 ordem sem chave (21:09:49)
+[21:09:52] produzindo 1..30 no topico ordem-sem-chave-210949 (modo sem-chave)
+[21:09:56] consumindo desde o inicio
+Topico: ordem-sem-chave-210949   modo: sem-chave   mensagens: 30
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P0  off=0    chave=-          valor=1
+  P0  off=1    chave=-          valor=2
+  P0  off=2    chave=-          valor=3
+  P0  off=3    chave=-          valor=4
+  P0  off=4    chave=-          valor=5
+  P0  off=5    chave=-          valor=6
+  P0  off=6    chave=-          valor=7
+  P0  off=7    chave=-          valor=8
+  P0  off=8    chave=-          valor=9
+  P0  off=9    chave=-          valor=10
+  P0  off=10   chave=-          valor=11
+  P0  off=11   chave=-          valor=12
+  P0  off=12   chave=-          valor=13
+  P0  off=13   chave=-          valor=14
+  P0  off=14   chave=-          valor=15
+  P0  off=15   chave=-          valor=16
+  P0  off=16   chave=-          valor=17
+  P0  off=17   chave=-          valor=18
+  P0  off=18   chave=-          valor=19
+  P0  off=19   chave=-          valor=20
+  P0  off=20   chave=-          valor=21
+  P0  off=21   chave=-          valor=22
+  P0  off=22   chave=-          valor=23
+  P0  off=23   chave=-          valor=24
+  P0  off=24   chave=-          valor=25
+  P0  off=25   chave=-          valor=26
+  P0  off=26   chave=-          valor=27
+  P0  off=27   chave=-          valor=28
+  P0  off=28   chave=-          valor=29
+  P0  off=29   chave=-          valor=30
+
+Sequencia por particao (ordenada por offset):
+  P0: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+
+Inversoes na ordem global recebida: 0
+Inversoes dentro de cada particao: 0
+[21:09:58] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/ordem_sem-chave_20261025_210949.txt
+
+################ E4 ordem round-robin (21:09:58)
+[21:10:01] produzindo 1..30 no topico ordem-round-robin-210958 (modo round-robin)
+[21:10:04] consumindo desde o inicio
+Topico: ordem-round-robin-210958   modo: round-robin   mensagens: 30
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P2  off=0    chave=-          valor=1
+  P2  off=1    chave=-          valor=4
+  P2  off=2    chave=-          valor=7
+  P2  off=3    chave=-          valor=10
+  P2  off=4    chave=-          valor=13
+  P2  off=5    chave=-          valor=16
+  P2  off=6    chave=-          valor=19
+  P2  off=7    chave=-          valor=22
+  P2  off=8    chave=-          valor=25
+  P2  off=9    chave=-          valor=28
+  P1  off=0    chave=-          valor=2
+  P1  off=1    chave=-          valor=5
+  P1  off=2    chave=-          valor=8
+  P1  off=3    chave=-          valor=11
+  P1  off=4    chave=-          valor=14
+  P1  off=5    chave=-          valor=17
+  P1  off=6    chave=-          valor=20
+  P1  off=7    chave=-          valor=23
+  P1  off=8    chave=-          valor=26
+  P1  off=9    chave=-          valor=29
+  P0  off=0    chave=-          valor=3
+  P0  off=1    chave=-          valor=6
+  P0  off=2    chave=-          valor=9
+  P0  off=3    chave=-          valor=12
+  P0  off=4    chave=-          valor=15
+  P0  off=5    chave=-          valor=18
+  P0  off=6    chave=-          valor=21
+  P0  off=7    chave=-          valor=24
+  P0  off=8    chave=-          valor=27
+  P0  off=9    chave=-          valor=30
+
+Sequencia por particao (ordenada por offset):
+  P0: 3 6 9 12 15 18 21 24 27 30
+  P1: 2 5 8 11 14 17 20 23 26 29
+  P2: 1 4 7 10 13 16 19 22 25 28
+
+Inversoes na ordem global recebida: 2
+Inversoes dentro de cada particao: 0
+[21:10:05] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/ordem_round-robin_20261025_210958.txt
+
+################ E4 ordem mesma chave (21:10:06)
+[21:10:09] produzindo 1..30 no topico ordem-mesma-chave-211006 (modo mesma-chave)
+[21:10:12] consumindo desde o inicio
+Topico: ordem-mesma-chave-211006   modo: mesma-chave   mensagens: 30
+
+Ordem em que o consumidor recebeu (particao, offset, chave, valor):
+  P0  off=0    chave=cliente1   valor=1
+  P0  off=1    chave=cliente1   valor=2
+  P0  off=2    chave=cliente1   valor=3
+  P0  off=3    chave=cliente1   valor=4
+  P0  off=4    chave=cliente1   valor=5
+  P0  off=5    chave=cliente1   valor=6
+  P0  off=6    chave=cliente1   valor=7
+  P0  off=7    chave=cliente1   valor=8
+  P0  off=8    chave=cliente1   valor=9
+  P0  off=9    chave=cliente1   valor=10
+  P0  off=10   chave=cliente1   valor=11
+  P0  off=11   chave=cliente1   valor=12
+  P0  off=12   chave=cliente1   valor=13
+  P0  off=13   chave=cliente1   valor=14
+  P0  off=14   chave=cliente1   valor=15
+  P0  off=15   chave=cliente1   valor=16
+  P0  off=16   chave=cliente1   valor=17
+  P0  off=17   chave=cliente1   valor=18
+  P0  off=18   chave=cliente1   valor=19
+  P0  off=19   chave=cliente1   valor=20
+  P0  off=20   chave=cliente1   valor=21
+  P0  off=21   chave=cliente1   valor=22
+  P0  off=22   chave=cliente1   valor=23
+  P0  off=23   chave=cliente1   valor=24
+  P0  off=24   chave=cliente1   valor=25
+  P0  off=25   chave=cliente1   valor=26
+  P0  off=26   chave=cliente1   valor=27
+  P0  off=27   chave=cliente1   valor=28
+  P0  off=28   chave=cliente1   valor=29
+  P0  off=29   chave=cliente1   valor=30
+
+Sequencia por particao (ordenada por offset):
+  P0: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+
+Inversoes na ordem global recebida: 0
+Inversoes dentro de cada particao: 0
+Inversoes dentro de cada chave: 0
+[21:10:13] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/ordem_mesma-chave_20261025_211006.txt
+
+################ E5 eleicao do lider de particao (21:10:13)
+[21:10:18] rep 1/5: lider de pedidos/0 = kafka1; derrubando (parar)
+1,pedidos,0,1,2,"3,2",563
+[21:10:32] rep 2/5: lider de pedidos/0 = kafka2; derrubando (parar)
+2,pedidos,0,2,1,"3,1",570
+[21:10:48] rep 3/5: lider de pedidos/0 = kafka1; derrubando (parar)
+3,pedidos,0,1,2,"3,2",711
+[21:11:02] rep 4/5: lider de pedidos/0 = kafka2; derrubando (parar)
+4,pedidos,0,2,1,"3,1",613
+[21:11:16] rep 5/5: lider de pedidos/0 = kafka1; derrubando (parar)
+5,pedidos,0,1,2,"3,2",675
+
+tempo de eleicao (ms): n=5  media=626.40  desvio=65.00
+[21:11:23] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/eleicao_particao_20261025_211014.csv
+
+################ E5 quorum (21:11:23)
+[2026-10-26 00:11:26,651] ERROR org.apache.kafka.common.errors.InvalidReplicationFactorException: Unable to replicate the partition 3 time(s): The target replication factor of 3 cannot be reached because only 2 broker(s) are registered.
+ (org.apache.kafka.tools.TopicCommand)
+[21:11:31] topico e5-quorum-211124: lider kafka2; vou derrubar kafka1 e depois kafka3
+== 3 nos ativos
+3,2,"2,3,1",10,10,20,ok,LeaderId=2 epoca=26
+[21:11:59] parando kafka1
+== 2 nos ativos (kafka1 parado)
+2,2,"2,3",10,10,40,ok,LeaderId=2 epoca=31
+[21:12:53] parando kafka3
+== 1 no ativo (so kafka2)
+1,2,"2",0,10,40,falhou,sem_resposta
+[21:14:34] religando os dois nos
+== depois de religar: mensagens na particao (ate o HW), por estado de origem
+  escritas com 3 no(s) ativo(s): acks=all -> 10 lidas; acks=1 -> 10 lidas
+  escritas com 2 no(s) ativo(s): acks=all -> 10 lidas; acks=1 -> 10 lidas
+  escritas com 1 no(s) ativo(s): acks=all -> 0 lidas; acks=1 -> 10 lidas
+  total na particao: 50
+[21:14:46] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e5_quorum_20261025_211124.txt e /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e5_quorum_20261025_211124.csv
+
+################ E6 particao de rede (21:14:46)
+Topico e6-particao-211446 (1 particao, fator 3). Lider antes da particao: kafka1
+antes: 10 de 10 escritas com acks=all
+
+[21:14:55] isolando kafka1 da rede interna
+== Lado minoritario (cliente com bootstrap so em kafka1)
+  metadados vistos por kafka1: lider=1 isr=1,2,3
+  escrita acks=all: 10 confirmadas, offsets 10-19, entre 12.5 e 12.5 s apos o isolamento
+  escrita acks=1:   10 confirmadas, offsets 20-29, entre 15.9 e 15.9 s apos o isolamento
+
+== Lado majoritario
+  novo lider eleito pela maioria: kafka2, visto 16 s apos o isolamento; 2 isr=2,3
+  escrita acks=all na maioria: 10 confirmadas, offsets 20-29, entre 20.3 e 20.3 s apos o isolamento
+  metadados vistos por kafka1 agora: lider=1 isr=1,2,3
+  log de kafka1 (ISR que ele tentou mudar / perda de contato):
+
+[21:15:17] reconectando kafka1
+== Depois de reconectar (ISR: 2,3,1, lider: kafka2)
+  mensagens que sobreviveram, por origem (lidas ate o high watermark):
+    antes da particao (0):     10 de 10
+    isolado, acks=all (1):     10 de 10
+    isolado, acks=1 (2):       0 de 10
+    maioria, acks=all (3):     10 de 10
+  conteudo final do log (offset:valor):
+    0:0.0 1:0.1 2:0.2 3:0.3 4:0.4 5:0.5 6:0.6 7:0.7 8:0.8 9:0.9 10:1.0 11:1.1 12:1.2 13:1.3 14:1.4 15:1.5 16:1.6 1
+    7:1.7 18:1.8 19:1.9 20:3.0 21:3.1 22:3.2 23:3.3 24:3.4 25:3.5 26:3.6 27:3.7 28:3.8 29:3.9 
+  log de kafka1 sobre truncamento ao voltar:
+    [2026-10-26 00:15:22,348] INFO [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Truncating partition e6-particao-211446-0 with TruncationState(offset=10, completed=true) due to leader epoch and o
+    [2026-10-26 00:15:22,348] INFO [UnifiedLog partition=e6-particao-211446-0, dir=/tmp/kafka-logs] Truncating to offset 10 (org.apache.kafka.storage.internals.log.UnifiedLog)
+[21:15:29] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e6_particao_20261025_211446.txt (confirmacoes do produtor em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e6_particao_20261025_211446.produtor.jsonl)
+
+################ E6/E7 recuperacao (21:15:29)
+[21:15:32] rep 1/5: isolando kafka3 da rede interna
+[21:15:42]   kafka3 saiu do ISR apos 9163 ms (ISR agora: 2,1); produzindo 20000 mensagens
+[21:15:45]   reconectando kafka3
+1,kafka3,pedidos,0,"2,1",9163,20000,2207
+[21:15:48] rep 2/5: isolando kafka3 da rede interna
+[21:15:57]   kafka3 saiu do ISR apos 8791 ms (ISR agora: 2,1); produzindo 20000 mensagens
+[21:16:01]   reconectando kafka3
+2,kafka3,pedidos,0,"2,1",8791,20000,8266
+[21:16:10] rep 3/5: isolando kafka3 da rede interna
+[21:20:09]   kafka3 saiu do ISR apos 238904 ms (ISR agora: 2,1); produzindo 20000 mensagens
+[21:22:43]   reconectando kafka3
+3,kafka3,pedidos,0,"2,1",238904,20000,2928
+[21:22:46] rep 4/5: isolando kafka3 da rede interna
+[21:25:01]   kafka3 saiu do ISR apos 132844 ms (ISR agora: 2,1,3); produzindo 20000 mensagens
+[21:30:10]   reconectando kafka3
+4,kafka3,pedidos,0,"2,1,3",132844,20000,5298
+[21:30:17] rep 5/5: isolando kafka3 da rede interna
+[21:30:28]   kafka3 saiu do ISR apos 10361 ms (ISR agora: 2,3); produzindo 20000 mensagens
+[21:31:53]   reconectando kafka3
+5,kafka3,pedidos,0,"2,3",10361,20000,16877
+
+tempo para voltar ao ISR (ms): n=5  media=7115.20  desvio=5948.58
+[21:32:11] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/recuperacao_kafka3_20261025_211529.csv
+
+################ E7 grupo de consumidores (21:32:11)
+Topico e7-grupo-213212, grupo grupo-e7-213212
+produzidas: 0 mensagens (7.0 a 7.29)
+
+1a leitura do grupo (10 mensagens, depois o consumidor e encerrado):
+  7.0 7.1 7.2 7.3 7.4 7.5 7.6 7.7 7.8 7.9 
+offsets do grupo apos a 1a leitura:
+  
+  GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+  grupo-e7-213212 e7-grupo-213212 0          10              30              20              -               -               -
+
+2a leitura do mesmo grupo (deve continuar do offset 10):
+  7.10 7.11 7.12 7.13 7.14 7.15 7.16 7.17 7.18 7.19 
+  
+  GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+  grupo-e7-213212 e7-grupo-213212 0          20              30              10              -               -               -
+
+== Estado final das replicas do topico pedidos (tamanho por broker, kafka-log-dirs):
+  broker 1  pedidos-2  45164602 bytes
+  broker 1  pedidos-0  48923450 bytes
+  broker 1  pedidos-1  47574144 bytes
+  broker 2  pedidos-2  45164602 bytes
+  broker 2  pedidos-0  48923450 bytes
+  broker 2  pedidos-1  47574144 bytes
+  broker 3  pedidos-2  45164602 bytes
+  broker 3  pedidos-0  48923450 bytes
+  broker 3  pedidos-1  47574144 bytes
+== Fim do log por particao (kafka-get-offsets):
+  pedidos:0:233011
+  pedidos:1:226602
+  pedidos:2:215139
+[21:33:58] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e7_grupo_20261025_213212.txt
+
+################ E8 eleicao do controlador (21:33:58)
+[21:34:10] rep 1/5: controlador ativo = kafka3 (epoca 36); derrubando

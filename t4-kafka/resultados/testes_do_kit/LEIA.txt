@@ -1,0 +1,6 @@
+Saidas dos testes do proprio kit (25/10/2026), feitos enquanto os scripts eram corrigidos.
+Nao use como evidencia do relatorio:
+- eleicao_particao_*202431 e eleicao_controlador_*202604/202811/202959/203343: medidos antes da
+  correcao que tirou o tempo do "docker stop" e passou a ler o horario do log Raft.
+- e9_retries_sem-idemp-5_*202529: contagem antiga, que somava duplicatas as inversoes.
+  Resultado bruto dessa rodada: 100146 recebidas de 100000, 146 duplicatas, 0 perdidas.

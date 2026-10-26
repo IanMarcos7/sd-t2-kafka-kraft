@@ -1,0 +1,117 @@
+### e3_replicacao.sh 1 200
+== Diretorios da particao pedidos-* em cada no (docker exec kafkaN ls /tmp/kafka-logs)
+  kafka1: pedidos-0 pedidos-1 pedidos-2 
+  kafka2: pedidos-0 pedidos-1 pedidos-2 
+  kafka3: pedidos-0 pedidos-1 pedidos-2 
+== Tamanho de cada replica (kafka-log-dirs)
+  broker 1  pedidos-2  7886797 bytes
+  broker 1  pedidos-0  8762243 bytes
+  broker 1  pedidos-1  8546542 bytes
+  broker 2  pedidos-2  7886797 bytes
+  broker 2  pedidos-0  8762243 bytes
+  broker 2  pedidos-1  8546542 bytes
+  broker 3  pedidos-2  7886797 bytes
+  broker 3  pedidos-0  8762243 bytes
+  broker 3  pedidos-1  8546542 bytes
+
+== Latencia ponta a ponta (kafka-e2e-latency, 200 mensagens de 200 bytes por rodada)
+  acks=1 rep 1: media,p99 (ms) = 12.2467,162
+  acks=all rep 1: media,p99 (ms) = 11.502,134
+  acks=1 media: n=1  media=12.25  desvio=0.00
+  acks=all media: n=1  media=11.50  desvio=0.00
+[20:52:12] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/testes_do_kit/novos/e3_replicacao_20261025_205141.txt e /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/testes_do_kit/novos/e3_replicacao_20261025_205141.csv
+### e5_quorum.sh
+[20:52:18] topico e5-quorum-205212: lider kafka3; vou derrubar kafka1 e depois kafka2
+== 3 nos ativos
+3,3,"3,1,2",10,10,20,ok,LeaderId=1 epoca=19
+[20:52:37] parando kafka1
+== 2 nos ativos (kafka1 parado)
+2,3,"3,2",9,10,39,ok,LeaderId=2 epoca=20
+[20:53:37] parando kafka2
+== 1 no ativo (so kafka3)
+1,3,"3",0,9,39,falhou,sem_resposta
+[20:55:37] religando os dois nos
+== depois de religar: mensagens na particao (ate o HW), por estado de origem
+  escritas com 3 no(s) ativo(s): acks=all -> 10 lidas; acks=1 -> 10 lidas
+  escritas com 2 no(s) ativo(s): acks=all -> 9 lidas; acks=1 -> 10 lidas
+  escritas com 1 no(s) ativo(s): acks=all -> 0 lidas; acks=1 -> 9 lidas
+  total na particao: 48
+[20:55:52] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/testes_do_kit/novos/e5_quorum_20261025_205212.txt e /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/testes_do_kit/novos/e5_quorum_20261025_205212.csv
+### e6_particao.sh
+Topico e6-particao-205552 (1 particao, fator 3). Lider antes da particao: kafka3
+antes: 10 de 10 escritas com acks=all
+
+[20:56:04] isolando kafka3 da rede interna
+== Lado minoritario (cliente falando so com kafka3)
+  metadados vistos por kafka3: lider=3 isr=3,1,2
+  escrita acks=1:   10 de 10 confirmadas
+  escrita acks=all: 10 de 10 confirmadas
+
+== Lado majoritario
+  novo lider eleito pela maioria: kafka1 (21991 ms apos o isolamento); 1 isr=1,2
+  escrita acks=all na maioria: 0 de 10 confirmadas
+  metadados vistos por kafka3 agora: lider=3 isr=3,1,2
+
+[20:56:43] reconectando kafka3
+== Depois de reconectar (ISR: 1,2,3, lider: kafka1)
+  mensagens que sobreviveram, por origem:
+    antes da particao (0):       10
+    isolado, acks=1 (1):         0
+    isolado, acks=all (2):       10
+    maioria, acks=all (3):       10
+  log de kafka3 sobre truncamento ao voltar:
+    [2026-10-25 23:56:45,165] INFO [ReplicaFetcher replicaId=3, leaderId=1, fetcherId=0] Truncating partition e6-particao-205552-0 with TruncationState(offset=10, completed=true) due to leader epoch and offset EpochEndOffset
+    [2026-10-25 23:56:45,165] INFO [UnifiedLog partition=e6-particao-205552-0, dir=/tmp/kafka-logs] Truncating to offset 10 (org.apache.kafka.storage.internals.log.UnifiedLog)
+[20:56:53] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/testes_do_kit/novos/e6_particao_20261025_205552.txt
+### e7_grupo.sh
+Topico e7-grupo-205653, grupo grupo-e7-205653
+produzidas: 30 mensagens (7.0 a 7.29)
+
+1a leitura do grupo (10 mensagens, depois o consumidor e encerrado):
+  
+offsets do grupo apos a 1a leitura:
+  
+  GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+  grupo-e7-205653 e7-grupo-205653 0          30              30              0               -               -               -
+
+2a leitura do mesmo grupo (deve continuar do offset 10):
+  
+  
+  GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+  grupo-e7-205653 e7-grupo-205653 0          30              30              0               -               -               -
+
+== Estado final das replicas do topico pedidos (tamanho por broker, kafka-log-dirs):
+  broker 1  pedidos-2  7886797 bytes
+  broker 1  pedidos-0  8762243 bytes
+  broker 1  pedidos-1  8546542 bytes
+  broker 2  pedidos-2  7886797 bytes
+  broker 2  pedidos-0  8762243 bytes
+  broker 2  pedidos-1  8546542 bytes
+  broker 3  pedidos-2  7886797 bytes
+  broker 3  pedidos-0  8762243 bytes
+  broker 3  pedidos-1  8546542 bytes
+== Fim do log por particao (kafka-get-offsets):
+  pedidos:0:41733
+  pedidos:1:40705
+  pedidos:2:37563
+[20:58:07] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/testes_do_kit/novos/e7_grupo_20261025_205653.txt
+### e8_epocas.sh
+Quorum KRaft antes: LeaderId=2, epoca=24
+Lider de pedidos/0 antes: kafka1. Historico de epocas (leader-epoch-checkpoint):
+  kafka1: [epoca 12 desde offset 0] [epoca 15 desde offset 41733] 
+  kafka2: [epoca 12 desde offset 0] 
+  kafka3: [epoca 12 desde offset 0] 
+[20:58:22] parando kafka1
+
+Novo lider de pedidos/0: kafka2. Uma escrita para registrar a nova epoca: 5 de 5
+  kafka1: 
+  kafka2: [epoca 12 desde offset 0] [epoca 16 desde offset 41733] 
+  kafka3: [epoca 12 desde offset 0] 
+
+Depois que kafka1 voltou (ele adota a epoca nova ao seguir o lider):
+  kafka1: [epoca 12 desde offset 0] 
+  kafka2: [epoca 12 desde offset 0] [epoca 16 desde offset 41733] 
+  kafka3: [epoca 12 desde offset 0] 
+Quorum KRaft depois: LeaderId=2, epoca=24
+[20:58:48] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/testes_do_kit/novos/e8_epocas_20261025_205807.txt
+FIM

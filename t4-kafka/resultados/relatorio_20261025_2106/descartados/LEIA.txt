@@ -1,0 +1,17 @@
+Arquivos desta pasta NAO entram no relatorio:
+- recuperacao_kafka3_*.csv: nas rodadas 3 e 4 o script consultou o proprio no isolado, que respondeu
+  com metadados antigos, e o produtor de teste travou ao escrever nele. O script foi corrigido
+  (consulta e produz so pela maioria) e a medicao foi refeita em continuar.sh.
+- eleicao_controlador_*.csv: a rodada 1 nao terminou. Com o kafka3 parado, o kafka2 ficou com
+  100% de CPU apos ~2 h de testes e o quorum entrou num ciclo de eleicoes sem vencedor (epocas 36 -> 76).
+  A bateria foi interrompida, os 3 nos reiniciados e o restante rodado em continuar.sh.
+
+Observacao: as rodadas 1 e 2 de recuperacao_kafka3_20261025_211529.csv sao validas (o no isolado
+ainda nao estava liderando particoes e a consulta funcionou) e entram no relatorio junto com as
+rodadas 1 a 3 de ../recuperacao_kafka3_20261025_214220.csv. A rodada 4 desse segundo arquivo travou:
+o kafka3 desconectado continuou no ISR do lider por mais de 3 min; a execucao foi interrompida e o
+restante rodou em ../continuar2.sh.
+
+- e9_vazao_20261025_2204*.csv: a vazao com 1 particao caiu de 12.016 para 419 msg/s entre a 1a e a 3a
+  rodada; kafka1 (lider) estava com 92% do limite de memoria e kafka2 com ~100% de CPU. Os topicos de
+  teste foram apagados, os nos reiniciados e a medicao refeita em ../continuar3.sh.

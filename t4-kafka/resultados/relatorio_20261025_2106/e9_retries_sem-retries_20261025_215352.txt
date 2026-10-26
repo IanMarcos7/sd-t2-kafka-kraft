@@ -1,0 +1,8 @@
+perfil=sem-retries
+config: enable.idempotence=false max.in.flight.requests.per.connection=5 retries=0
+falha=matar no lider kafka3 (offset 49826)
+enviadas=100000  recebidas=99270
+fora de ordem (valores novos apos um maior)=0
+duplicatas=0
+perdidas=730
+linhas de erro no produtor=1465

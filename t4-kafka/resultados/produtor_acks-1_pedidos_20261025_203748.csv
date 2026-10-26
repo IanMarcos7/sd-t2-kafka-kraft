@@ -1,0 +1,2 @@
+rep,acks,topico,mensagens,bytes,msgs_por_s,mb_por_s,lat_media_ms,lat_max_ms,p99_ms
+1,1,pedidos,50000,200,20508.6,3.91,563.69,876.00,860

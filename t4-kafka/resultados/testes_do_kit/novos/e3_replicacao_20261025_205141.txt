@@ -1,0 +1,20 @@
+== Diretorios da particao pedidos-* em cada no (docker exec kafkaN ls /tmp/kafka-logs)
+  kafka1: pedidos-0 pedidos-1 pedidos-2 
+  kafka2: pedidos-0 pedidos-1 pedidos-2 
+  kafka3: pedidos-0 pedidos-1 pedidos-2 
+== Tamanho de cada replica (kafka-log-dirs)
+  broker 1  pedidos-2  7886797 bytes
+  broker 1  pedidos-0  8762243 bytes
+  broker 1  pedidos-1  8546542 bytes
+  broker 2  pedidos-2  7886797 bytes
+  broker 2  pedidos-0  8762243 bytes
+  broker 2  pedidos-1  8546542 bytes
+  broker 3  pedidos-2  7886797 bytes
+  broker 3  pedidos-0  8762243 bytes
+  broker 3  pedidos-1  8546542 bytes
+
+== Latencia ponta a ponta (kafka-e2e-latency, 200 mensagens de 200 bytes por rodada)
+  acks=1 rep 1: media,p99 (ms) = 12.2467,162
+  acks=all rep 1: media,p99 (ms) = 11.502,134
+  acks=1 media: n=1  media=12.25  desvio=0.00
+  acks=all media: n=1  media=11.50  desvio=0.00

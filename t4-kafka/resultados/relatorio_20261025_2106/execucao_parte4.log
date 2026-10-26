@@ -1,0 +1,85 @@
+
+################ Limpeza (22:10:50)
+kcat  916KiB / 64MiB  0.00%
+kafka2  219.8MiB / 320MiB  98.12%
+kafka1  293.8MiB / 320MiB  2.77%
+cliente  2.195MiB / 512MiB  0.00%
+kafka3  277.3MiB / 320MiB  6.69%
+dbg-205946
+e3-latencia
+e6-particao-205552
+e6-particao-210315
+e6-particao-211446
+e7-grupo-205653
+e7-grupo-210404
+e7-grupo-213212
+pedidos
+vazao-p1
+vazao-p3
+vazao-p6
+ Container kafka3 Restarting 
+ Container kafka1 Restarting 
+ Container kafka2 Restarting 
+ Container kafka3 Started 
+ Container kafka1 Started 
+ Container kafka2 Started 
+[22:12:06] subindo os conteineres
+ Container kafka2 Running 
+ Container kafka3 Running 
+ Container cliente Running 
+ Container kcat Running 
+ Container kafka1 Running 
+[22:12:08] esperando o quorum de controladores (3 votantes)
+[22:12:21] quorum formado: LeaderId=3, LeaderEpoch=103
+[22:12:21] criando o topico pedidos (3 particoes, fator 3)
+[22:12:35] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/status_20261025_221226.txt
+kcat  560KiB / 64MiB  0.00%
+kafka2  237.7MiB / 320MiB  1.59%
+kafka1  237.5MiB / 320MiB  3.00%
+cliente  1.828MiB / 512MiB  0.00%
+kafka3  255.1MiB / 320MiB  3.20%
+
+################ E9 vazao 1/3/6 particoes (22:12:58)
+[22:13:03] 1 particao(oes), repeticao 1/5
+1,1,10998.7,2.10,1730.01,2767.00
+[22:13:11] 1 particao(oes), repeticao 2/5
+1,2,11701.4,2.23,1750.05,2749.00
+[22:13:19] 1 particao(oes), repeticao 3/5
+1,3,12091.9,2.31,1324.81,2099.00
+[22:13:27] 1 particao(oes), repeticao 4/5
+1,4,13255.6,2.53,1345.50,2012.00
+[22:13:34] 1 particao(oes), repeticao 5/5
+1,5,12478.2,2.38,1521.67,2383.00
+[22:13:47] 3 particao(oes), repeticao 1/5
+3,1,11636.0,2.22,1581.53,2544.00
+[22:13:55] 3 particao(oes), repeticao 2/5
+3,2,13024.2,2.48,1376.28,2127.00
+[22:14:02] 3 particao(oes), repeticao 3/5
+3,3,13151.0,2.51,1001.44,1780.00
+[22:14:10] 3 particao(oes), repeticao 4/5
+3,4,12990.4,2.48,1227.39,2044.00
+[22:14:18] 3 particao(oes), repeticao 5/5
+3,5,14934.3,2.85,1004.14,1685.00
+[22:14:30] 6 particao(oes), repeticao 1/5
+6,1,17331.0,3.31,837.00,1293.00
+[22:14:37] 6 particao(oes), repeticao 2/5
+6,2,12431.6,2.37,793.17,1211.00
+[22:14:45] 6 particao(oes), repeticao 3/5
+6,3,11163.2,2.13,966.15,1856.00
+[22:14:53] 6 particao(oes), repeticao 4/5
+6,4,14302.1,2.73,886.96,1847.00
+[22:15:00] 6 particao(oes), repeticao 5/5
+6,5,13020.8,2.48,326.72,1333.00
+
+1 particao(oes): vazao msgs/s n=5  media=12105.16  desvio=844.12
+3 particao(oes): vazao msgs/s n=5  media=13147.18  desvio=1174.43
+6 particao(oes): vazao msgs/s n=5  media=13649.74  desvio=2347.32
+[22:15:08] salvo em /c/Users/enzoc/Desktop/T2 - Sistemas Distribuidos/t4-kafka/resultados/relatorio_20261025_2106/e9_vazao_20261025_221258.csv
+
+################ Ambiente no fim (22:15:08)
+kcat  560KiB / 64MiB  0.00%
+kafka2  269.2MiB / 320MiB  1.98%
+kafka1  319.4MiB / 320MiB  3.28%
+cliente  1.855MiB / 512MiB  0.00%
+kafka3  273.1MiB / 320MiB  4.18%
+FIM
